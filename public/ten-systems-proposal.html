@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ten Systems — Proposal / Ten Fabrics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F2F0E9;
+    --cream-2:#EAE7DC;
+    --ink:#111110;
+    --ink-soft:#6b6a63;
+    --line:#D8D4C6;
+    --line-dark:rgba(255,255,255,0.14);
+    --orange:#FF4A17;
+    --orange-dim:#FF4A171a;
+    --dark:#0A0A0A;
+    --dark-2:#151513;
+    --white:#F7F6F2;
+    --mono:'IBM Plex Mono', monospace;
+    --disp:'Archivo Black', sans-serif;
+    --body:'Inter', sans-serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+
+  ::selection{background:var(--orange); color:var(--dark);}
+
+  :focus-visible{
+    outline:2px solid var(--orange);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:1440px;
+    margin:0 auto;
+    padding:0 64px;
+  }
+
+  .mono{
+    font-family:var(--mono);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    font-size:12.5px;
+  }
+
+  .eyebrow{
+    font-family:var(--mono);
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    font-size:12.5px;
+    color:var(--orange);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:7px;height:7px;
+    background:var(--orange);
+    display:inline-block;
+    flex-shrink:0;
+  }
+
+  h1,h2,h3{
+    font-family:var(--disp);
+    font-weight:400;
+    line-height:0.98;
+    letter-spacing:-0.01em;
+    text-transform:uppercase;
+  }
+
+  .btn{
+    font-family:var(--mono);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    font-size:12.5px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:17px 26px;
+    border:1px solid var(--ink);
+    background:transparent;
+    color:var(--ink);
+    cursor:pointer;
+    transition:background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
+  }
+  .btn svg{width:13px;height:13px; transition:transform .18s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn:hover svg{transform:translate(2px,-2px);}
+
+  .btn-solid{
+    background:var(--orange);
+    border-color:var(--orange);
+    color:var(--dark);
+  }
+  .btn-solid:hover{background:#ff5c2e;}
+
+  .btn-outline-dark{
+    border-color:rgba(255,255,255,0.35);
+    color:var(--white);
+  }
+  .btn-outline-dark:hover{
+    border-color:var(--white);
+    background:rgba(255,255,255,0.06);
+  }
+
+  .btn-outline-light{
+    border-color:var(--ink);
+    color:var(--ink);
+  }
+  .btn-outline-light:hover{
+    background:var(--ink);
+    color:var(--cream);
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:var(--cream);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 64px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--mono);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    font-size:12.5px;
+  }
+  .brand-dot{
+    width:9px;height:9px;
+    background:var(--orange);
+    flex-shrink:0;
+  }
+  .nav-links{
+    display:flex;
+    gap:40px;
+    font-family:var(--mono);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    font-size:12.5px;
+  }
+  .nav-links a{
+    position:relative;
+    padding-bottom:2px;
+  }
+  .nav-links a::after{
+    content:'';
+    position:absolute;
+    left:0; bottom:-3px;
+    width:0; height:1px;
+    background:var(--orange);
+    transition:width .2s ease;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .nav-toggle{display:none;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:56px 0 0;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:40px;
+    align-items:center;
+    padding-bottom:28px;
+    border-bottom:1px solid var(--line);
+    font-family:var(--mono);
+    text-transform:uppercase;
+    font-size:12px;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+  }
+  .meta-row span b{color:var(--ink); font-weight:600;}
+  .status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:var(--orange);
+    margin-left:auto;
+  }
+  .status-pill::before{
+    content:'';
+    width:7px;height:7px;
+    border-radius:50%;
+    background:var(--orange);
+    animation:pulse 1.8s infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:1;}
+    50%{opacity:0.35;}
+  }
+
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:60px;
+    padding:64px 0 100px;
+  }
+  .hero-headline{
+    font-size:clamp(44px, 6.4vw, 96px);
+  }
+  .hero-headline .soft{
+    color:var(--ink-soft);
+  }
+  .hero-headline .accent-sq{
+    display:inline-block;
+    width:0.55em; height:0.55em;
+    background:var(--orange);
+    vertical-align:middle;
+    margin-left:6px;
+  }
+  .hero-side{
+    padding-top:8px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .hero-side p{
+    font-size:19px;
+    line-height:1.55;
+    color:var(--ink);
+    margin-bottom:36px;
+  }
+  .hl{
+    background:var(--orange);
+    padding:0 4px;
+    box-decoration-break:clone;
+    -webkit-box-decoration-break:clone;
+  }
+  .hero-btns{display:flex; gap:16px; flex-wrap:wrap;}
+
+  /* ---------- SPLIT / CONTEXT DARK SECTION ---------- */
+  .context{
+    background:var(--dark);
+    color:var(--white);
+  }
+  .context-grid{
+    display:grid;
+    grid-template-columns:1.05fr 1fr;
+    min-height:560px;
+  }
+  .context-visual{
+    position:relative;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(255,74,23,0.14), transparent 45%),
+      radial-gradient(circle at 75% 70%, rgba(255,74,23,0.10), transparent 40%),
+      var(--dark-2);
+    border-right:1px solid var(--line-dark);
+    overflow:hidden;
+  }
+  .context-visual svg{width:100%; height:100%;}
+  .context-text{
+    padding:72px 64px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .context-text .eyebrow{color:var(--orange);}
+  .context-text p{
+    font-size:18px;
+    line-height:1.65;
+    color:#D9D7CF;
+    max-width:52ch;
+    margin-bottom:48px;
+  }
+  .context-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    border-top:1px solid var(--line-dark);
+    padding-top:32px;
+  }
+  .context-stats div{border-left:1px solid var(--line-dark); padding-left:20px;}
+  .context-stats div:first-child{border-left:none; padding-left:0;}
+  .stat-num{
+    font-family:var(--disp);
+    font-size:40px;
+    color:var(--white);
+    display:block;
+    margin-bottom:6px;
+  }
+  .stat-label{
+    font-family:var(--mono);
+    text-transform:uppercase;
+    font-size:11px;
+    letter-spacing:0.05em;
+    color:#8a887f;
+  }
+  .context-tags{
+    border-top:1px solid var(--line-dark);
+    position:relative;
+    overflow:hidden;
+    padding:26px 0;
+    font-family:var(--disp);
+    font-size:clamp(18px, 2.4vw, 30px);
+    text-transform:uppercase;
+    color:var(--white);
+  }
+  .context-tags-marquee{
+    display:flex;
+    width:max-content;
+    min-width:100%;
+    animation:contextTagMarquee 16s linear infinite;
+  }
+  .context-tags-track{
+    display:flex;
+    align-items:center;
+    gap:36px;
+    padding:0 20px;
+    white-space:nowrap;
+  }
+  .context-tags .ast{color:var(--orange); font-family:var(--body); font-size:22px;}
+  @keyframes contextTagMarquee{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+
+  /* ---------- GENERIC LIGHT SECTION ---------- */
+  section.panel{
+    padding:120px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .section-head{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    margin-bottom:64px;
+    align-items:end;
+  }
+  .section-head h2{
+    font-size:clamp(34px, 4.2vw, 58px);
+  }
+  .section-head p{
+    font-size:17px;
+    line-height:1.6;
+    color:var(--ink-soft);
+    max-width:46ch;
+  }
+
+  /* challenge grid */
+  .grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--ink);
+    border-left:1px solid var(--line);
+  }
+  .grid-3 .cell{
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:40px 36px;
+    min-height:220px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transition:background .2s ease;
+  }
+  .grid-3 .cell:hover{background:var(--cream-2);}
+  .cell-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    font-family:var(--mono);
+    color:var(--orange);
+    font-size:13px;
+  }
+  .cell h3{
+    font-family:var(--body);
+    font-weight:700;
+    text-transform:none;
+    font-size:21px;
+    letter-spacing:0;
+    margin:20px 0 10px;
+  }
+  .cell p{color:var(--ink-soft); font-size:15px; line-height:1.55;}
+
+  /* solution dark */
+  .solution{
+    background:var(--dark);
+    color:var(--white);
+    padding:120px 0;
+  }
+  .solution-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:60px;
+  }
+  .solution h2{
+    font-size:clamp(34px, 5vw, 68px);
+    margin-bottom:8px;
+  }
+  .solution h2 .accent{color:var(--orange);}
+  .solution-copy p{
+    font-size:18px;
+    line-height:1.65;
+    color:#D9D7CF;
+    max-width:56ch;
+  }
+  .mini-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+  }
+  .mini-cell{
+    padding:26px 0;
+    border-top:1px solid var(--line-dark);
+  }
+  .mini-cell:nth-child(odd){padding-right:30px;}
+  .mini-cell:nth-child(odd){border-right:1px solid var(--line-dark);}
+  .mini-cell .tag{
+    display:flex; align-items:center; gap:8px;
+    font-family:var(--mono);
+    text-transform:uppercase;
+    font-size:11.5px;
+    color:var(--orange);
+    letter-spacing:0.06em;
+    margin-bottom:10px;
+  }
+  .mini-cell .tag::before{content:''; width:7px;height:7px; background:var(--orange);}
+  .mini-cell .desc{font-size:16px; color:var(--white);}
+
+  /* flow steps */
+  .steps-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border:1px solid var(--ink);
+  }
+  .step{
+    padding:34px 30px;
+    border-right:1px solid var(--line);
+    position:relative;
+  }
+  .step:last-child{border-right:none;}
+  .step-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:26px;
+  }
+  .step-top .mono{color:var(--ink-soft);}
+  .step-arrow{
+    width:26px;height:26px;
+    border-radius:50%;
+    background:var(--orange);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--dark);
+    font-size:13px;
+    flex-shrink:0;
+  }
+  .step h3{
+    font-family:var(--body);
+    font-weight:700;
+    text-transform:none;
+    letter-spacing:0;
+    font-size:26px;
+    margin-bottom:12px;
+  }
+  .step p{font-size:14.5px; color:var(--ink-soft); line-height:1.5;}
+
+  /* capabilities grid 4x2 */
+  .grid-4{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--ink);
+    border-left:1px solid var(--line);
+  }
+  .grid-4 .cell{
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:34px 28px;
+    min-height:230px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transition:background .2s ease;
+  }
+  .grid-4 .cell:hover{background:var(--cream-2);}
+  .icon-box{
+    width:38px;height:38px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--ink);
+  }
+  .icon-box svg{width:26px; height:26px;}
+  .grid-4 h3{
+    font-family:var(--body);
+    font-weight:700;
+    text-transform:none;
+    letter-spacing:0;
+    font-size:18px;
+    margin:18px 0 8px;
+  }
+  .grid-4 p{font-size:14px; color:var(--ink-soft); line-height:1.5;}
+  .grid-4 .count{font-family:var(--mono); font-size:11.5px; color:var(--ink-soft);}
+
+  /* data isolation split */
+  .iso-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
+  }
+  .iso-copy .checklist{margin-top:32px;}
+  .iso-copy .checklist li{
+    display:flex; align-items:center; gap:12px;
+    font-family:var(--mono);
+    text-transform:uppercase;
+    font-size:12.5px;
+    letter-spacing:0.04em;
+    padding:14px 0;
+    border-top:1px solid var(--line);
+  }
+  .iso-copy .checklist li:last-child{border-bottom:1px solid var(--line);}
+  .iso-copy .checklist svg{width:15px;height:15px; color:var(--orange); flex-shrink:0;}
+
+  .iso-visual{
+    position:relative;
+    min-height:420px;
+  }
+  .paper-stack{
+    position:absolute;
+    left:0; top:40px;
+    width:220px;
+  }
+  .paper{
+    position:absolute;
+    width:220px;height:290px;
+    background:var(--white);
+    border:1px solid var(--line);
+    box-shadow:0 10px 24px rgba(0,0,0,0.06);
+  }
+  .paper:nth-child(1){transform:translate(18px,18px) rotate(3deg);}
+  .paper:nth-child(2){transform:translate(9px,9px) rotate(1.5deg);}
+  .paper:nth-child(3){transform:translate(0,0) rotate(0deg); padding:20px;}
+  .paper:nth-child(3) .bar{height:8px; background:var(--ink); width:70%; margin-bottom:14px;}
+  .paper:nth-child(3) .line{height:5px; background:var(--line); margin-bottom:8px;}
+  .paper:nth-child(3) .line.orange{background:var(--orange); width:40%; margin-top:14px;}
+
+  .relay-panel{
+    position:absolute;
+    right:0; top:0;
+    width:340px;
+    background:var(--dark);
+    color:var(--white);
+    border:1px solid #222;
+  }
+  .relay-head{
+    display:flex; align-items:center; gap:8px;
+    padding:16px 20px;
+    border-bottom:1px solid var(--line-dark);
+    font-family:var(--mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:#8a887f;
+  }
+  .relay-head .dots{display:flex; gap:5px; margin-right:6px;}
+  .relay-head .dots span{width:7px;height:7px;border-radius:50%; background:#333;}
+  .relay-head .dots span:first-child{background:var(--orange);}
+  .relay-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 20px;
+    border-bottom:1px solid var(--line-dark);
+    font-size:14.5px;
+  }
+  .relay-row .num{font-family:var(--mono); color:#8a887f; font-size:11px; margin-right:12px;}
+  .relay-row svg{width:15px;height:15px; color:var(--orange);}
+
+  .iso-footer{
+    display:flex;
+    justify-content:space-between;
+    margin-top:24px;
+    font-family:var(--mono);
+    text-transform:uppercase;
+    font-size:11.5px;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+  }
+
+  /* roles */
+  .roles-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--ink);
+    border-left:1px solid var(--line);
+  }
+  .role-cell{
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:44px 40px;
+  }
+  .role-top{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    margin-bottom:36px;
+  }
+  .role-top .mono{color:var(--orange);}
+  .role-cell h3{font-size:clamp(34px,4vw,52px); margin-bottom:14px;}
+  .role-tagline{font-size:17px; color:var(--ink-soft); margin-bottom:30px;}
+  .role-cell ul li{
+    display:flex; gap:12px; align-items:flex-start;
+    font-size:15px; padding:10px 0;
+    border-top:1px solid var(--line);
+  }
+  .role-cell ul li:before{
+    content:'';
+    width:6px;height:6px;
+    background:var(--orange);
+    margin-top:8px;
+    flex-shrink:0;
+  }
+
+  /* impact */
+  .impact-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border:1px solid var(--ink);
+    margin-bottom:24px;
+  }
+  .impact-cell{
+    padding:34px 30px;
+    border-right:1px solid var(--line);
+  }
+  .impact-cell:last-child{border-right:none;}
+  .impact-cell .mono{color:var(--ink-soft); margin-bottom:20px; display:block;}
+  .impact-num{
+    font-family:var(--disp);
+    font-size:54px;
+    margin-bottom:16px;
+  }
+  .impact-cell p{font-size:14.5px; color:var(--ink-soft);}
+
+  .check-row{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+  }
+  .check-card{
+    border:1px solid var(--line);
+    padding:26px 24px;
+    display:flex; gap:14px;
+  }
+  .check-card svg{width:18px;height:18px; color:var(--orange); flex-shrink:0; margin-top:2px;}
+  .check-card p{font-size:14.5px; line-height:1.5;}
+
+  /* quote */
+  .quote-section{
+    background:var(--orange);
+    color:var(--ink);
+    padding:100px 0;
+  }
+  .quote-section .eyebrow{color:var(--ink); opacity:0.7;}
+  .quote-section .eyebrow::before{background:var(--ink);}
+  .quote-section blockquote{
+    font-family:var(--disp);
+    font-size:clamp(30px, 5.2vw, 62px);
+    line-height:1.05;
+    text-transform:uppercase;
+    max-width:1100px;
+  }
+
+  /* decisions list */
+  .decision-list{counter-reset:d;}
+  .decision-item{
+    display:grid;
+    grid-template-columns:90px 1fr;
+    gap:24px;
+    padding:30px 0;
+    border-top:1px solid var(--line);
+    align-items:start;
+  }
+  .decision-list .decision-item:last-child{border-bottom:1px solid var(--line);}
+  .decision-num{
+    font-family:var(--mono);
+    color:var(--orange);
+    font-size:14px;
+  }
+  .decision-item h4{
+    font-family:var(--body);
+    font-weight:600;
+    font-size:19px;
+    margin-bottom:6px;
+  }
+  .decision-item p{font-size:15px; color:var(--ink-soft); max-width:60ch;}
+
+  /* final cta */
+  .final{
+    background:var(--dark);
+    color:var(--white);
+    padding:130px 0 90px;
+  }
+  .final-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:60px;
+    align-items:end;
+  }
+  .final h2{
+    font-size:clamp(38px, 5.6vw, 74px);
+    margin-bottom:0;
+  }
+  .final h2 .accent{color:var(--orange);}
+  .final-side p{
+    font-size:17px;
+    color:#B9B7AD;
+    margin-bottom:30px;
+    line-height:1.6;
+  }
+  .final-btns{display:flex; gap:16px; flex-wrap:wrap;}
+
+  footer{
+    background:var(--dark);
+    color:#6f6d64;
+    padding:30px 0;
+    border-top:1px solid var(--line-dark);
+  }
+  .footer-row{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    font-family:var(--mono);
+    text-transform:uppercase;
+    font-size:11px;
+    letter-spacing:0.06em;
+  }
+
+  /* reveal on scroll */
+  .reveal{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .reveal.in-view{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1080px){
+    .wrap{padding:0 32px;}
+    nav{padding:20px 32px;}
+    .hero-grid, .section-head, .context-grid, .solution-grid, .iso-grid, .final-grid{
+      grid-template-columns:1fr;
+    }
+    .context-text{padding:56px 32px;}
+    .grid-3, .grid-4{grid-template-columns:repeat(2,1fr);}
+    .steps-row{grid-template-columns:repeat(2,1fr);}
+    .step{border-bottom:1px solid var(--line);}
+    .roles-grid{grid-template-columns:1fr;}
+    .impact-row{grid-template-columns:repeat(2,1fr);}
+    .impact-cell{border-bottom:1px solid var(--line);}
+    .check-row{grid-template-columns:1fr;}
+    .iso-visual{min-height:520px;}
+    .relay-panel{position:relative; width:100%; margin-top:340px;}
+    .paper-stack{position:absolute; top:0;}
+  }
+
+  @media (max-width: 720px){
+    .wrap{padding:0 20px;}
+    nav{padding:18px 20px;}
+    .nav-links{
+      position:fixed;
+      inset:0;
+      top:64px;
+      background:var(--cream);
+      flex-direction:column;
+      padding:40px 20px;
+      gap:26px;
+      font-size:16px;
+      transform:translateX(100%);
+      transition:transform .3s ease;
+      z-index:99;
+    }
+    .nav-links.open{transform:translateX(0);}
+    .nav-toggle{
+      display:flex;
+      flex-direction:column;
+      gap:5px;
+      background:none;
+      border:none;
+      cursor:pointer;
+      padding:6px;
+    }
+    .nav-toggle span{width:22px; height:2px; background:var(--ink);}
+    .nav-cta{display:none;}
+    .grid-3, .grid-4{grid-template-columns:1fr;}
+    .steps-row{grid-template-columns:1fr;}
+    .step{border-right:none; border-bottom:1px solid var(--line);}
+    .impact-row{grid-template-columns:1fr;}
+    .impact-cell{border-right:none; border-bottom:1px solid var(--line);}
+    .context-stats{grid-template-columns:1fr; gap:20px;}
+    .context-stats div{border-left:none; padding-left:0; border-top:1px solid var(--line-dark); padding-top:16px;}
+    .context-stats div:first-child{border-top:none; padding-top:0;}
+    .decision-item{grid-template-columns:1fr; gap:8px;}
+    section.panel{padding:80px 0;}
+    .meta-row{gap:16px 24px;}
+    .status-pill{margin-left:0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#" class="brand"><span class="brand-dot"></span>TEN SYSTEMS / PROPOSAL</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks">
+      <a href="#problem">The Problem</a>
+      <a href="#model">The Model</a>
+      <a href="#flow">The Flow</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#next">Next Steps</a>
+    </div>
+    <a href="#next" class="btn btn-solid nav-cta">Book a Walkthrough <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg></a>
+  </nav>
+</header>
+
+<section class="hero wrap">
+  <div class="meta-row">
+    <span>INDUSTRY — <b>APPAREL SOURCING &amp; PRODUCTION</b></span>
+    <span>ENGAGEMENT — <b>CUSTOM PLATFORM BUILD</b></span>
+    <span>STAGE — <b>PROPOSAL, PRE-DEVELOPMENT</b></span>
+    <span class="status-pill">SCOPING IN PROGRESS</span>
+  </div>
+
+  <div class="hero-grid">
+    <h1 class="hero-headline reveal">
+      TEN SYSTEMS.<span class="accent-sq"></span><br>
+      <span class="soft">FROM THREE FACTORIES</span><br>
+      TO ONE CONTROL<br>
+      ROOM.
+    </h1>
+    <div class="hero-side reveal">
+      <div>
+        <div class="eyebrow">One-line value</div>
+        <p>From your own floor plus partners in <span class="hl">Bangladesh and Turkey</span>, to a <span class="hl">single command center</span> that runs every order the same way — for every customer across Europe.</p>
+      </div>
+      <div class="hero-btns">
+        <a href="#capabilities" class="btn btn-solid">See The Plan <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg></a>
+        <a href="#next" class="btn btn-outline-light">Book A Walkthrough <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="context">
+  <div class="context-grid">
+    <div class="context-visual">
+      <svg viewBox="0 0 600 560" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M40 0H0V40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="600" height="560" fill="url(#grid)"/>
+        <!-- connecting lines -->
+        <line x1="120" y1="180" x2="330" y2="300" stroke="#FF4A17" stroke-width="1.5" stroke-dasharray="4 5" opacity="0.7"/>
+        <line x1="180" y1="420" x2="330" y2="300" stroke="#FF4A17" stroke-width="1.5" stroke-dasharray="4 5" opacity="0.7"/>
+        <line x1="330" y1="300" x2="480" y2="150" stroke="#FF4A17" stroke-width="1.5" opacity="0.9"/>
+        <!-- own factory -->
+        <circle cx="120" cy="180" r="7" fill="#EDEBE3"/>
+        <text x="140" y="184" fill="#EDEBE3" font-family="IBM Plex Mono" font-size="11" letter-spacing="1">OWN FLOOR</text>
+        <!-- bangladesh -->
+        <circle cx="180" cy="420" r="7" fill="#EDEBE3"/>
+        <text x="200" y="424" fill="#EDEBE3" font-family="IBM Plex Mono" font-size="11" letter-spacing="1">BANGLADESH</text>
+        <!-- turkey -->
+        <circle cx="330" cy="300" r="9" fill="#FF4A17"/>
+        <text x="352" y="304" fill="#FF4A17" font-family="IBM Plex Mono" font-size="11" letter-spacing="1">ADMIN — TEN FABRICS</text>
+        <!-- europe -->
+        <circle cx="480" cy="150" r="7" fill="#EDEBE3"/>
+        <text x="500" y="154" fill="#EDEBE3" font-family="IBM Plex Mono" font-size="11" letter-spacing="1">EUROPE</text>
+        <circle cx="330" cy="300" r="60" fill="none" stroke="rgba(255,74,23,0.25)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="context-text">
+      <div class="eyebrow">The Context</div>
+      <p>Ten Fabrics sits between two worlds — a factory operator and a trusted sourcing partner. Some orders run through your own facility. Most are placed with manufacturing partners in Bangladesh and Turkey. Every one of them ships to a demanding customer base across Europe. None of that complexity should be visible to the people buying from you.</p>
+      <div class="context-stats">
+        <div><span class="stat-num">3</span><span class="stat-label">Sourcing Channels To Unify</span></div>
+        <div><span class="stat-num">1</span><span class="stat-label">Point Of Control</span></div>
+        <div><span class="stat-num">0</span><span class="stat-label">Direct Customer–Factory Contact</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="context-tags">
+    <div class="context-tags-marquee">
+      <div class="context-tags-track">
+        <span>CUSTOMER</span><span class="ast">✳</span>
+        <span>ADMIN</span><span class="ast">✳</span>
+        <span>FACTORY NETWORK</span><span class="ast">✳</span>
+        <span>CUSTOMER</span><span class="ast">✳</span>
+        <span>ADMIN</span><span class="ast">✳</span>
+        <span>FACTORY NETWORK</span><span class="ast">✳</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="problem">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">01 — Where the friction is today</div>
+        <h2>SIX GAPS. ONE<br>COORDINATION<br>PROBLEM.</h2>
+      </div>
+      <p>None of this is a people problem — it's a systems gap. Every one of these gets closed by routing all of it through a single, structured platform.</p>
+    </div>
+
+    <div class="grid-3 reveal">
+      <div class="cell">
+        <div class="cell-top">(01) <span>—</span></div>
+        <div>
+          <h3>Zero Order Visibility</h3>
+          <p>Customers have to ask you for status instead of seeing it live.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-top">(02) <span>—</span></div>
+        <div>
+          <h3>Manual Factory Coordination</h3>
+          <p>Your own floor and two overseas partners get tracked differently, by hand.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-top">(03) <span>—</span></div>
+        <div>
+          <h3>No Data Firewall</h3>
+          <p>Customer identity and factory identity aren't formally kept apart.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-top">(04) <span>—</span></div>
+        <div>
+          <h3>Scattered Communication</h3>
+          <p>Delays, disputes, and change requests get handled ad hoc, wherever the message came in.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-top">(05) <span>—</span></div>
+        <div>
+          <h3>Inconsistent Reporting</h3>
+          <p>Each sourcing channel reports progress in its own format, at its own pace.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-top">(06) <span>—</span></div>
+        <div>
+          <h3>No Unified Timeline</h3>
+          <p>Approvals happen separately per order, per channel — with no single source of truth.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="solution" id="model">
+  <div class="wrap">
+    <div class="solution-grid">
+      <div class="reveal">
+        <div class="eyebrow">02 — The proposed model</div>
+        <h2>ONE <span class="accent">CONTROL ROOM.</span><br>EVERY FACTORY<br>ROUTES THROUGH<br>IT THE SAME WAY.</h2>
+      </div>
+      <div class="solution-copy reveal">
+        <p>We're proposing Ten Systems be built around one rule: Admin is the only party who talks to both sides. It won't matter if an order goes to your own floor or a partner in Dhaka or Istanbul — the same process, the same data protection, and the same one-click approval apply, every time.</p>
+        <div class="mini-grid">
+          <div class="mini-cell">
+            <div class="tag">Unified Ops</div>
+            <div class="desc">One system, three sourcing channels.</div>
+          </div>
+          <div class="mini-cell">
+            <div class="tag">Real-Time Status</div>
+            <div class="desc">Live across every factory.</div>
+          </div>
+          <div class="mini-cell">
+            <div class="tag">Zero Direct Contact</div>
+            <div class="desc">Customer and factory never meet.</div>
+          </div>
+          <div class="mini-cell">
+            <div class="tag">Built Across Borders</div>
+            <div class="desc">Same rules, Dhaka to Istanbul to your own floor.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="flow">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">03 — The order flow</div>
+        <h2>FOUR STEPS.<br>ONE RAIL —<br>WHOEVER'S<br>PRODUCING.</h2>
+      </div>
+      <p>A straight line from browse to doorstep, with Admin as the only handoff point along the way.</p>
+    </div>
+
+    <div class="steps-row reveal">
+      <div class="step">
+        <div class="step-top"><span class="mono">STEP 01</span><span class="step-arrow">›</span></div>
+        <h3>Design &amp; Order</h3>
+        <p>Customer designs or customizes, previews live, pays, and submits.</p>
+      </div>
+      <div class="step">
+        <div class="step-top"><span class="mono">STEP 02</span><span class="step-arrow">›</span></div>
+        <h3>Assign &amp; Confirm</h3>
+        <p>Admin selects the factory — own floor, Bangladesh, or Turkey — and it confirms availability.</p>
+      </div>
+      <div class="step">
+        <div class="step-top"><span class="mono">STEP 03</span><span class="step-arrow">›</span></div>
+        <h3>Produce</h3>
+        <p>Procurement → cutting → picking → QC, tracked stage by stage.</p>
+      </div>
+      <div class="step">
+        <div class="step-top"><span class="mono">STEP 04</span><span class="step-arrow">›</span></div>
+        <h3>Deliver</h3>
+        <p>Dispatch, with real-time tracking flowing back to the customer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="capabilities">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">04 — What we're proposing to build</div>
+        <h2>EIGHT<br>CAPABILITIES.<br>ONE PLATFORM.</h2>
+      </div>
+      <p>Every capability maps to a friction point from Section 01 — not a generic feature checklist.</p>
+    </div>
+
+    <div class="grid-4 reveal">
+      <div class="cell">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div>
+          <h3>Real-Time Mockup Engine</h3>
+          <p>Live preview for AI prints and full custom builds.</p>
+        </div>
+        <span class="count">01 / 08</span>
+      </div>
+      <div class="cell">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l1.6 5.2L19 9l-5.4 1.8L12 16l-1.6-5.2L5 9l5.4-1.8L12 2z"/></svg></div>
+        <div>
+          <h3>AI Design Generation</h3>
+          <p>Customer-generated artwork, applied straight to blank apparel.</p>
+        </div>
+        <span class="count">02 / 08</span>
+      </div>
+      <div class="cell">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21V10l9-7 9 7v11"/><path d="M9 21v-7h6v7"/></svg></div>
+        <div>
+          <h3>Factory Network Assignment</h3>
+          <p>Route orders to your floor or partner factories, manually, order by order.</p>
+        </div>
+        <span class="count">03 / 08</span>
+      </div>
+      <div class="cell">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <div>
+          <h3>Availability Check Loop</h3>
+          <p>No promise reaches the customer until the factory confirms it.</p>
+        </div>
+        <span class="count">04 / 08</span>
+      </div>
+      <div class="cell">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 10h18M8 15h4"/></svg></div>
+        <div>
+          <h3>Granular Status Pipeline</h3>
+          <p>Intake → procurement → production → dispatch, tracked at every sub-step.</p>
+        </div>
+        <span class="count">05 / 08</span>
+      </div>
+      <div class="cell">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"/></svg></div>
+        <div>
+          <h3>Data Isolation Middleware</h3>
+          <p>Structural separation between customer and factory data.</p>
+        </div>
+        <span class="count">06 / 08</span>
+      </div>
+      <div class="cell">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+        <div>
+          <h3>Ghost Relay Messaging</h3>
+          <p>All communication routed and mediated through Admin.</p>
+        </div>
+        <span class="count">07 / 08</span>
+      </div>
+      <div class="cell">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg></div>
+        <div>
+          <h3>Financial &amp; Dispute Tags</h3>
+          <p>Payment status and disputes tracked against every order.</p>
+        </div>
+        <span class="count">08 / 08</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">05 — Data isolation</div>
+        <h2>TWO SIDES.<br>NEVER ONE<br>VIEW.</h2>
+      </div>
+      <p>Right now, sourcing complexity and customer detail can end up mixed in the same conversation. We're proposing a structural fix — not a policy, a middleware layer that strips identity before anything crosses sides.</p>
+    </div>
+
+    <div class="iso-grid reveal">
+      <div class="iso-copy">
+        <ul class="checklist">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Factory never sees price</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Factory never sees customer identity</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Customer never sees sourcing origin</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Customer never sees factory costs</li>
+        </ul>
+      </div>
+
+      <div class="iso-visual">
+        <div class="paper-stack">
+          <div class="paper"></div>
+          <div class="paper"></div>
+          <div class="paper">
+            <div class="bar"></div>
+            <div class="line"></div>
+            <div class="line" style="width:80%"></div>
+            <div class="line" style="width:55%"></div>
+            <div class="line orange"></div>
+          </div>
+        </div>
+        <div class="relay-panel">
+          <div class="relay-head"><span class="dots"><span></span><span></span><span></span></span>ADMIN / RELAY — ORDER #EU-1042</div>
+          <div class="relay-row"><span><span class="num">01</span>Customer Details</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <div class="relay-row"><span><span class="num">02</span>Commercial Terms</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <div class="relay-row"><span><span class="num">03</span>Production Spec</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <div class="relay-row"><span><span class="num">04</span>Factory Response</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
+        </div>
+        <div class="iso-footer">
+          <span>Before · Mixed Data</span>
+          <span>After · Structured Isolation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">06 — Three lenses, one platform</div>
+        <h2>THREE ROLES.<br>ONE SOURCE<br>OF TRUTH.</h2>
+      </div>
+      <p>Each side gets a dashboard built for how they actually work — none of them see more than they need to.</p>
+    </div>
+
+    <div class="roles-grid reveal">
+      <div class="role-cell">
+        <div class="role-top"><span class="mono">ROLE / 01</span><span class="mono">+</span></div>
+        <h3>Customer</h3>
+        <p class="role-tagline">Design. Order. Track.</p>
+        <ul>
+          <li>Real-time mockup tool</li>
+          <li>Live order tracking</li>
+          <li>Never sees sourcing origin</li>
+        </ul>
+      </div>
+      <div class="role-cell">
+        <div class="role-top"><span class="mono">ROLE / 02</span><span class="mono">+</span></div>
+        <h3>Admin</h3>
+        <p class="role-tagline">Assign. Approve. Control.</p>
+        <ul>
+          <li>Full visibility across all 3 channels</li>
+          <li>One-click factory approval</li>
+          <li>Owns every conversation</li>
+        </ul>
+      </div>
+      <div class="role-cell">
+        <div class="role-top"><span class="mono">ROLE / 03</span><span class="mono">+</span></div>
+        <h3>Factory</h3>
+        <p class="role-tagline">Receive. Produce. Update.</p>
+        <ul>
+          <li>Production-only specs</li>
+          <li>Structured status pipeline</li>
+          <li>Zero customer contact</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">07 — What this is designed to unlock</div>
+        <h2>WHAT WE'RE<br>BUILDING<br>TOWARD.</h2>
+      </div>
+      <p>These are the outcomes the platform is designed to produce — the real numbers will come from your first weeks running on it.</p>
+    </div>
+
+    <div class="impact-row reveal">
+      <div class="impact-cell">
+        <span class="mono">Target / 01</span>
+        <div class="impact-num">1</div>
+        <p>Control point across 3 sourcing channels</p>
+      </div>
+      <div class="impact-cell">
+        <span class="mono">Target / 02</span>
+        <div class="impact-num">0</div>
+        <p>Direct customer–factory contact</p>
+      </div>
+      <div class="impact-cell">
+        <span class="mono">Target / 03</span>
+        <div class="impact-num">100%</div>
+        <p>Data-isolated by design, not policy</p>
+      </div>
+      <div class="impact-cell">
+        <span class="mono">Target / 04</span>
+        <div class="impact-num">EU</div>
+        <p>Grade experience, on every order</p>
+      </div>
+    </div>
+
+    <div class="check-row reveal">
+      <div class="check-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        <p>Coordination overhead moves into the system, not onto more headcount.</p>
+      </div>
+      <div class="check-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        <p>A consistent, premium experience for European customers, regardless of sourcing origin.</p>
+      </div>
+      <div class="check-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        <p>Confidence to scale outsourced capacity without losing commercial control.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-section">
+  <div class="wrap reveal">
+    <div class="eyebrow">One-line value proposition</div>
+    <blockquote>"One control room for every order — wherever it's made."</blockquote>
+  </div>
+</section>
+
+<section class="panel" id="decisions">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">08 — Before we build</div>
+        <h2>FIVE THINGS<br>WORTH LOCKING<br>IN TOGETHER.</h2>
+      </div>
+      <p>Nothing below is a gap in the plan — it's a decision only you can make well, and we'd rather make it with you now than assume it later.</p>
+    </div>
+
+    <div class="decision-list reveal">
+      <div class="decision-item">
+        <span class="decision-num">01</span>
+        <div>
+          <h4>How granular should customer-facing status be?</h4>
+          <p>Top-level stages only (Pending, Processing, Production, Shipped), or more detail than that?</p>
+        </div>
+      </div>
+      <div class="decision-item">
+        <span class="decision-num">02</span>
+        <div>
+          <h4>Mockup tool: 2D flat preview or 3D render?</h4>
+          <p>2D is faster to build and ship; 3D adds real engineering time before v1.</p>
+        </div>
+      </div>
+      <div class="decision-item">
+        <span class="decision-num">03</span>
+        <div>
+          <h4>Can a single order split across factories?</h4>
+          <p>Including a split between your own floor and a partner facility, on the same order.</p>
+        </div>
+      </div>
+      <div class="decision-item">
+        <span class="decision-num">04</span>
+        <div>
+          <h4>Combined or per-channel inventory view?</h4>
+          <p>One view across own floor, Bangladesh, and Turkey — or separated by channel.</p>
+        </div>
+      </div>
+      <div class="decision-item">
+        <span class="decision-num">05</span>
+        <div>
+          <h4>Any Europe-specific requirements from day one?</h4>
+          <p>Currency display, language, or labeling/compliance needs worth building in early.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="next">
+  <div class="wrap">
+    <div class="final-grid">
+      <div class="reveal">
+        <div class="eyebrow">Next steps</div>
+        <h2>LET'S BUILD THE<br><span class="accent">CONTROL ROOM</span><br>YOUR SOURCING<br>ACTUALLY RUNS ON.</h2>
+      </div>
+      <div class="final-side reveal">
+        <p>Tell us which decisions in Section 08 you want to finalize first. We'll turn it into a build timeline your team can start against.</p>
+        <div class="final-btns">
+          <a href="#" class="btn btn-solid">Start The Build <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg></a>
+          <a href="#decisions" class="btn btn-outline-dark">View Open Questions <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>BlackMatter Technologies</span>
+    <span>Ten Systems — Platform Proposal</span>
+    <span>Prepared for Ten Fabrics · 2026</span>
+  </div>
+</footer>
+
+<script>
+  // mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
