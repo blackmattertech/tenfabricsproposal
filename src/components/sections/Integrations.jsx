@@ -33,16 +33,6 @@ const cards = [
   },
   {
     n: '4',
-    title: 'Server',
-    icon: 'server',
-    items: [
-      'Server access: SSH / SFTP (or preferred method)',
-      'Server credentials and required environments (staging & production)',
-      'Database access (if managed separately)',
-    ],
-  },
-  {
-    n: '5',
     title: 'Domain',
     icon: 'domain',
     items: [
@@ -51,7 +41,7 @@ const cards = [
     ],
   },
   {
-    n: '6',
+    n: '5',
     title: 'Mail Sender (Third Party or SMTP)',
     icon: 'mail',
     items: [
@@ -61,7 +51,7 @@ const cards = [
     ],
   },
   {
-    n: '7',
+    n: '6',
     title: 'WhatsApp APIs (if required)',
     icon: 'whatsapp',
     items: [
@@ -97,13 +87,6 @@ function IntegrationIcon({ type }) {
         <svg {...common}>
           <path d="M7 18a5 5 0 010-10h10a5 5 0 010 10H7z" />
           <path d="M12 8V5M9 5h6" strokeLinecap="round" />
-        </svg>
-      )
-    case 'server':
-      return (
-        <svg {...common}>
-          <rect x="5" y="4" width="14" height="16" rx="2" />
-          <path d="M8 8h8M8 12h8M8 16h5" strokeLinecap="round" />
         </svg>
       )
     case 'domain':
